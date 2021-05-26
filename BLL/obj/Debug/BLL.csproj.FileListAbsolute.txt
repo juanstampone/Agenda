@@ -1,0 +1,9 @@
+C:\Users\Juan\source\repos\Agenda\BLL\bin\Debug\BLL.dll
+C:\Users\Juan\source\repos\Agenda\BLL\bin\Debug\BLL.pdb
+C:\Users\Juan\source\repos\Agenda\BLL\bin\Debug\Entidad.dll
+C:\Users\Juan\source\repos\Agenda\BLL\bin\Debug\Entidad.pdb
+C:\Users\Juan\source\repos\Agenda\BLL\obj\Debug\BLL.csprojAssemblyReference.cache
+C:\Users\Juan\source\repos\Agenda\BLL\obj\Debug\BLL.csproj.CoreCompileInputs.cache
+C:\Users\Juan\source\repos\Agenda\BLL\obj\Debug\BLL.csproj.CopyComplete
+C:\Users\Juan\source\repos\Agenda\BLL\obj\Debug\BLL.dll
+C:\Users\Juan\source\repos\Agenda\BLL\obj\Debug\BLL.pdb
