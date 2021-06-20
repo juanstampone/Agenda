@@ -22,7 +22,12 @@ namespace Agenda
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            IContactBussines business = new ContactBussines((List<Contacto>)Application["listaContacto"]);
+            if (!IsPostBack)
+            {
+                CargarFiltros();
+            }
+
+         /*   IContactBussines business = new ContactBussines((List<Contacto>)Application["listaContacto"]);
 
             Response.Write("Imprimo en pantalla el listado de registros:");
             Response.Write("<BR/>");
@@ -79,6 +84,23 @@ namespace Agenda
             Response.Write("Imprimo en pantalla el listado de registros filtrados con el nombre \"Manuel\":");
             Response.Write("<BR/>");
             print(business.getListContactoByFilter("Manuel"));
+         */
+        }
+
+        public void Consultar(Object sender, EventArgs e) 
+        {
+            
+        }
+
+
+        public void CargarFiltros()
+        {
+            ListaDePaises.Items.Insert(0, new ListItem("Todos", "0"));
+        }
+
+
+        public void LimpiarCampos(Object sender, EventArgs e)
+        {
 
         }
     }

@@ -1,0 +1,6 @@
+C:\Users\Juan\source\repos\Agenda\Utils\bin\Debug\Utils.dll
+C:\Users\Juan\source\repos\Agenda\Utils\bin\Debug\Utils.pdb
+C:\Users\Juan\source\repos\Agenda\Utils\obj\Debug\Utils.csprojAssemblyReference.cache
+C:\Users\Juan\source\repos\Agenda\Utils\obj\Debug\Utils.csproj.CoreCompileInputs.cache
+C:\Users\Juan\source\repos\Agenda\Utils\obj\Debug\Utils.dll
+C:\Users\Juan\source\repos\Agenda\Utils\obj\Debug\Utils.pdb
