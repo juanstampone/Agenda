@@ -6,6 +6,9 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using BLL;
 using Entidad;
+using DAL;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace Agenda
 {
@@ -27,78 +30,107 @@ namespace Agenda
                 CargarFiltros();
             }
 
-         /*   IContactBussines business = new ContactBussines((List<Contacto>)Application["listaContacto"]);
-
-            Response.Write("Imprimo en pantalla el listado de registros:");
-            Response.Write("<BR/>");
-            print(business.getListContactoByFilter(""));
-            Response.Write("--------------------------------------");
-            Response.Write("<BR/>");
-
-
-            Response.Write("Obtengo el contacto 1 en pantalla:");
-            Response.Write("<BR/>");
-            Contacto contacto = business.getContactosById(1);
-            Response.Write(string.Concat("Id: ", contacto.id.ToString(), " Nombre y Apellido: ", contacto.nombreApellido));
-            Response.Write("<BR/>");
-            Response.Write("--------------------------------------");
-            Response.Write("<BR/>");
-
-
-            Response.Write("Actualizo el registro obtenido, lo recupero y lo imprimo en pantalla:");
-            Response.Write("<BR/>");
-            contacto.nombreApellido = "Juan Manuel Stampone";
-            business.update(contacto);
-            Contacto contactoUpdate = business.getContactosById(1);
-            Response.Write(string.Concat("Id: ", contactoUpdate.id.ToString(), " Nombre y Apellido: ", contactoUpdate.nombreApellido));
-            Response.Write("<BR/>");
-            Response.Write("--------------------------------------");
-            Response.Write("<BR/>");
-
-
-            Response.Write("Elimino el registro con id=2:");
-            Response.Write("<BR/>");
-            business.delete(new Contacto() { id = 2 });
-            Response.Write("--------------------------------------");
-            Response.Write("<BR/>");
-
-
-
-            Response.Write("Inserto un nuevo registro y lo imprimo en pantalla:");
-            Response.Write("<BR/>");
-            Contacto contactoInsert = business.insertar(new Contacto { id =3, nombreApellido = "Manuel Gomez" });
-            Response.Write(string.Concat("Id: ", contactoInsert.id.ToString(), " Nombre y Apellido: ", contactoInsert.nombreApellido));
-            Response.Write("<BR/>");
-            Response.Write("--------------------------------------");
-            Response.Write("<BR/>");
-
-
-
-            Response.Write("Imprimo en pantalla el listado de registros:");
-            Response.Write("<BR/>");
-            print(business.getListContactoByFilter(""));
-            Response.Write("--------------------------------------");
-            Response.Write("<BR/>");
-
-
-            Response.Write("Imprimo en pantalla el listado de registros filtrados con el nombre \"Manuel\":");
-            Response.Write("<BR/>");
-            print(business.getListContactoByFilter("Manuel"));
-         */
+       
         }
 
         public void Consultar(Object sender, EventArgs e) 
         {
-            
+            //Validar
+            ContactoFiltro CFiltro = new ContactoFiltro
+            {
+                ApellidoNombre = TextBoxNombre.Text.Equals("") ? null : TextBoxNombre.Text,
+                FechaIngresoDesde = Convert.ToDateTime(TextBoxFID.Text),
+                FechaIngresoHasta = Convert.ToDateTime(TextBoxFIH.Text),
+                Activo = DropDownListActivo.SelectedItem.Text,
+                IdArea = int.Parse(DropDownListArea.SelectedValue),
+                ContactoInterno = DropDownCI.SelectedItem.Text,
+                IdPais = int.Parse(ListaDePaises.SelectedValue),
+                Localidad = TextBoxLocalidad.Text.Equals("") ? null : TextBoxLocalidad.Text,
+                Organizacion = TextBoxOrganizacion.Text.Equals("") ? null : TextBoxOrganizacion.Text
+            };
+
+            IContactBussines contactoBussines = new ContactBussines();
+            List<Contacto> contactos = contactoBussines.ConsultaFiltroContacto(CFiltro);
+            GridViewConsulta.DataSource = contactos;
+            GridViewConsulta.DataBind();
+
+
         }
 
 
         public void CargarFiltros()
         {
-            ListaDePaises.Items.Insert(0, new ListItem("Todos", "0"));
+            DataAccessLayer conexion = new DataAccessLayer();
+
+            SqlConnection con = conexion.AbrirConexion();
+            SqlCommand consulta = new SqlCommand("select * from Pais", con);
+            SqlDataAdapter da = new SqlDataAdapter(consulta);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            ListaDePaises.DataTextField = ds.Tables[0].Columns["NombrePais"].ToString();
+            ListaDePaises.DataValueField = ds.Tables[0].Columns["IdPais"].ToString();
+            ListaDePaises.DataSource = ds.Tables[0];
+            ListaDePaises.DataBind();
+            ListaDePaises.Items.Insert(0, new ListItem("TODOS", "0"));
+
+            SqlCommand consultaArea = new SqlCommand("select * from Area", con);
+            SqlDataAdapter daArea = new SqlDataAdapter(consultaArea);
+            DataSet dsArea = new DataSet();
+            daArea.Fill(dsArea);
+            DropDownListArea.DataTextField = dsArea.Tables[0].Columns["NombreArea"].ToString();
+            DropDownListArea.DataValueField = dsArea.Tables[0].Columns["IdArea"].ToString();
+            DropDownListArea.DataSource = dsArea.Tables[0];
+            DropDownListArea.DataBind();
+            DropDownListArea.Items.Insert(0, new ListItem("TODAS", "0"));
+
+            DropDownListActivo.Items.Add(new ListItem("SI", "1"));
+            DropDownListActivo.Items.Add(new ListItem("NO", "2"));
+
+            DropDownListActivo.Items.Insert(0, new ListItem("TODOS", "0"));
+
+
+            DropDownCI.Items.Add(new ListItem("SI", "1"));
+            DropDownCI.Items.Add(new ListItem("NO", "2"));
+
+            DropDownCI.Items.Insert(0, new ListItem("TODOS", "0"));
+
+
         }
 
+        protected void AltaContacto(Object sender, EventArgs e)
+        {
+            Response.Redirect("AEContacto.aspx", false);
+        }
+        protected void EditarContacto(Object sender, EventArgs e)
+        {
+            ImageButton boton = (ImageButton)sender;
+            GridViewRow row = (GridViewRow)boton.DataItemContainer;
+            Contacto contacto = new Contacto
+            {
+                id = int.Parse(row.Cells[0].Text),
+                nombreApellido = row.Cells[1].Text,
+                genero = row.Cells[2].Text,
+                pais = row.Cells[3].Text,
+                localidad = row.Cells[4].Text,
+                organizacion = row.Cells[5].Text,
+                direccion = row.Cells[6].Text,
+                contactoInterno = row.Cells[7].Text
+            }
 
+            Cache['Contacto'] = 
+            Application['Disparador'] = 'Editar'
+            Response.Redirect("AEContacto.aspx", false);
+        }
+
+        protected void EliminarContacto(Object sender, EventArgs e)
+        {
+            ImageButton boton = (ImageButton)sender;
+            GridViewRow row = (GridViewRow)boton.DataItemContainer;
+            int idContacto = int.Parse(row.Cells[0].Text);
+
+            IContactBussines contactoBussines = new ContactBussines();
+            int resultado = contactoBussines.delete(idContacto);
+        }
         public void LimpiarCampos(Object sender, EventArgs e)
         {
 

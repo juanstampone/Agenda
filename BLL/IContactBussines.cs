@@ -11,8 +11,9 @@ namespace BLL
     {
         Contacto getContactosById(int id);
         List<Contacto> getListContactoByFilter(String nombreApellido);
-        Contacto insertar(Contacto contacto);
+        int insertar(Contacto contacto);
         void update(Contacto contacto);
-        void delete(Contacto contacto);
+        int delete(int idContacto);
+        List<Contacto> ConsultaFiltroContacto(ContactoFiltro contactoFiltro);
     }
 }

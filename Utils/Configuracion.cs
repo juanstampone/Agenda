@@ -9,7 +9,7 @@ namespace Utils
     public class Configuracion
     {
         private const string Server = "localhost\\SQLEXPRESS";
-        private const string DBName = "AGENDA_DB";
+        private const string DBName = "agenda";
         public static string GetConnectionString()
         {
             return string.Concat(

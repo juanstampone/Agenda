@@ -78,3 +78,7 @@ C:\Users\Juan\source\repos\Agenda\Agenda\obj\Debug\Agenda.Site.csproj.CoreCompil
 C:\Users\Juan\source\repos\Agenda\Agenda\obj\Debug\Agenda.Site.csproj.CopyComplete
 C:\Users\Juan\source\repos\Agenda\Agenda\obj\Debug\Agenda.dll
 C:\Users\Juan\source\repos\Agenda\Agenda\obj\Debug\Agenda.pdb
+C:\Users\Juan\source\repos\Agenda\Agenda\bin\DAL.dll
+C:\Users\Juan\source\repos\Agenda\Agenda\bin\Utils.dll
+C:\Users\Juan\source\repos\Agenda\Agenda\bin\DAL.pdb
+C:\Users\Juan\source\repos\Agenda\Agenda\bin\Utils.pdb

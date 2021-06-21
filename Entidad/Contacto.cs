@@ -17,11 +17,12 @@ namespace Entidad
         public String direccion { get; set; }
         public String contactoInterno { get; set; }
         public String area { get; set; }
-
+        public int IdArea { get; set; }
+        public int IdPais { get; set; }
         public DateTime fechaIngreso { get; set; }
         public String activo { get; set; }
-        public int telefonoFijo { get; set; }
-        public int telefonoCelular { get; set; }
+        public String telefonoFijo { get; set; }
+        public String telefonoCelular { get; set; }
         public String email { get; set; }
         public String cuentaSkype { get; set; }
 

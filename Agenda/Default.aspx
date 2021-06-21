@@ -82,14 +82,36 @@
                     </td>
                     <td>
                         <asp:Button ID="ButtonNuevoContacto" runat="server" Text="Nuevo Contacto"
-                            Width="100px" Height="40px" BackColor="Blue" Font-Size="Larger" Font-Bold="true" ForeColor="WhiteSmoke" />
+                            Width="100px" Height="40px" BackColor="Blue" Font-Size="Larger" Font-Bold="true" ForeColor="WhiteSmoke" OnClick="AltaContacto" />
                     </td>
                 </tr>
             </table>
-            <asp:GridView ID="GridViewConsulta" runat="server" Text="Texto" AutoGenerateColumns="true" RowStyle-HorizontalAlign="Center"
+            <asp:GridView ID="GridViewConsulta" runat="server" Text="Texto" AutoGenerateColumns="false" RowStyle-HorizontalAlign="Center"
                          HeaderStyle-CssClass ="TextoConsulta" Width="100%" GridLines="Horizontal" >
                 <Columns> 
-
+                      <asp:boundfield datafield="id" headertext="Id"/>
+                      <asp:boundfield datafield="nombreApellido" headertext="Nombre y Apellido"/>
+                      <asp:boundfield datafield="genero" headertext="Genero"/>
+                      <asp:boundfield datafield="pais" headertext="Pais"/>
+                      <asp:boundfield datafield="localidad" headertext="Localidad"/>
+                      <asp:boundfield datafield="contactoInterno" headertext="Contacto Interno"/>   
+                      <asp:boundfield datafield="organizacion" headertext="Organizacion"/>
+                      <asp:boundfield datafield="area" headertext="Área"/>
+                      <asp:boundfield datafield="fechaIngreso" headertext="Fecha Ingreso"/>   
+                      <asp:boundfield datafield="activo" headertext="Activo"/>
+                      <asp:boundfield datafield="direccion" headertext="Direccion"/>
+                      <asp:boundfield datafield="telefonoFijo" headertext="Telefono Fijo - Interno"/>   
+                      <asp:boundfield datafield="telefonoCelular" headertext="Telefono Celular"/>   
+                      <asp:boundfield datafield="email" headertext="E-mail"/>
+                      <asp:boundfield datafield="cuentaSkype" headertext="Cuenta Skype"/>
+                      <asp:TemplateField HeaderText="Acciones">
+                           <ItemTemplate>
+                                <asp:ImageButton ToolTip="Consultar"  ImageUrl="/Images/zoom.png" ID="BtnConsultar" CommandName="DetalleContacto"   runat="server"></asp:ImageButton>
+                                <asp:ImageButton ToolTip="Editar" ImageUrl="/Images/edit.png" ID="BtnEditar" CommandName="EditarContacto" onClick="EditarContacto" runat="server"></asp:ImageButton>
+                                <asp:ImageButton ToolTip="Eliminar" ImageUrl="/Images/delete.png" ID="BtnEliminar" CommandName="Eliminar" onClick="EliminarContacto" runat="server"></asp:ImageButton>
+                                <asp:ImageButton ToolTip="Pausar/Activar" ImageUrl="/Images/play_pause.png" ID="BtnActivar"  CommandName="Activar" runat="server" ></asp:ImageButton>          
+                            </ItemTemplate>
+                        </asp:TemplateField>
                 </Columns>
            </asp:GridView>
         </div>

@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL;
+using System.Data.SqlClient;
+using System.Data;
+using Utils;
 
 namespace BLL
 {
@@ -15,6 +19,11 @@ namespace BLL
         {
             this.listContacto = lista;
         }
+
+        public ContactBussines()
+        {
+        }
+
         public Contacto getContactosById(int id)
         {
             return this.listContacto.Single(p => p.id == id); ;
@@ -38,24 +47,81 @@ namespace BLL
             this.listContacto.Add(contacto);
         }
         
-        public void delete(Contacto contacto)
+        public int delete(int idContacto)
         {
-            Contacto contactoDelete = this.listContacto.Find(p => p.id.Equals(contacto.id));
-            if (contactoDelete != null)
+            using (DataAccessLayer dal = new DataAccessLayer())
             {
-                this.listContacto.Remove(contactoDelete);
+                SqlConnection conexion = dal.AbrirConexion();
+                SqlTransaction transaccion = conexion.BeginTransaction();
+
+                int resultado = dal.EliminarContacto(transaccion, conexion, idContacto);
+                transaccion.Commit();
+                return resultado;
+            }
+            return 0;
+        }
+
+        public int insertar(Contacto contacto)
+        {
+            using(DataAccessLayer dal = new DataAccessLayer())
+            {
+                SqlConnection conexion = dal.AbrirConexion();
+                SqlTransaction transaccion = conexion.BeginTransaction();
+
+                int resultado = dal.CrearContacto(transaccion, conexion, contacto);
+                transaccion.Commit();
+                return resultado;
+            }
+            return 0;
+        }
+
+        public List<Contacto> ConsultaFiltroContacto(ContactoFiltro contactoFiltro)
+        {
+                using (DataAccessLayer dal = new DataAccessLayer())
+                {
+                    SqlConnection conexion = dal.AbrirConexion();
+
+                    DataSet ds = dal.QueryContactosFiltros(conexion, contactoFiltro);
+                    return MapDataSetToEmpleados(ds);
+                }
+            
+        }
+
+        private List<Contacto> MapDataSetToEmpleados(DataSet ds)
+        {
+            List<Contacto> listaContacto = new List<Contacto>();
+            if (DataSetHelper.HasRecords(ds)){
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    listaContacto.Add(MapDataRowToContacto(row));
+                }
+                return listaContacto;
+            }
+            else {
+                return null;
             }
         }
 
-        public Contacto insertar(Contacto contacto)
+        private Contacto MapDataRowToContacto(DataRow row)
         {
-            int max = this.listContacto.OrderByDescending(x => x.id).First().id;
-            contacto.id = (max + 1);
-            this.listContacto.Add(contacto);
-            return contacto;
+            return new Contacto
+            {
+                id = Convert.ToInt32(row["IdContacto"]),
+                nombreApellido = Convert.ToString(row["ApellidoNombre"]),
+                genero = Convert.ToString(row["Genero"]),
+                pais = Convert.ToString(row["NombrePais"]),
+                localidad = Convert.ToString(row["Localidad"]),
+                contactoInterno = Convert.ToString(row["ContactoInterno"]),
+                organizacion = Convert.ToString(row["Organizacion"]),
+                area = Convert.ToString(row["NombreArea"]),
+                fechaIngreso = Convert.ToDateTime(row["FechaIngreso"]),
+                activo = Convert.ToString(row["Activo"]),
+                direccion = Convert.ToString(row["Direccion"]),
+                telefonoFijo = Convert.ToString(row["TelefonoFijo"]),
+                telefonoCelular = Convert.ToString(row["TelefonoCelular"]),
+                email = Convert.ToString(row["Email"]),
+                cuentaSkype = Convert.ToString(row["CuentaSkype"])
+            };
         }
-
-
-
     }
 }

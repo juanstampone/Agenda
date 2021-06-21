@@ -122,7 +122,14 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="AEContacto.aspx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Images\anular.png" />
+    <Content Include="Images\clearFilter.png" />
+    <Content Include="Images\delete.png" />
+    <Content Include="Images\edit.png" />
+    <Content Include="Images\play_pause.png" />
+    <Content Include="Images\zoom.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -192,6 +199,13 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
+    <Compile Include="AEContacto.aspx.cs">
+      <DependentUpon>AEContacto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AEContacto.aspx.designer.cs">
+      <DependentUpon>AEContacto.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -211,6 +225,10 @@
     <ProjectReference Include="..\BLL\BLL.csproj">
       <Project>{aabb94df-c998-4310-8e6a-9e64d3e43db3}</Project>
       <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{d754ec9c-b95b-42b9-b7fb-f33626e25ad4}</Project>
+      <Name>DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Entidad\Entidad.csproj">
       <Project>{6de4fd46-4335-4a16-b92e-2eaafbbc47e4}</Project>

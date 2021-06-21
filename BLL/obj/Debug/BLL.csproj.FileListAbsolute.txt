@@ -7,3 +7,7 @@ C:\Users\Juan\source\repos\Agenda\BLL\obj\Debug\BLL.csproj.CoreCompileInputs.cac
 C:\Users\Juan\source\repos\Agenda\BLL\obj\Debug\BLL.csproj.CopyComplete
 C:\Users\Juan\source\repos\Agenda\BLL\obj\Debug\BLL.dll
 C:\Users\Juan\source\repos\Agenda\BLL\obj\Debug\BLL.pdb
+C:\Users\Juan\source\repos\Agenda\BLL\bin\Debug\DAL.dll
+C:\Users\Juan\source\repos\Agenda\BLL\bin\Debug\Utils.dll
+C:\Users\Juan\source\repos\Agenda\BLL\bin\Debug\DAL.pdb
+C:\Users\Juan\source\repos\Agenda\BLL\bin\Debug\Utils.pdb
