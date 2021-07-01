@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entidad;
 
 namespace Entidad
 {
@@ -17,7 +18,7 @@ namespace Entidad
         public String Organizacion { get; set; }
         public int IdArea { get; set; }
         public String Activo { get; set; }
+        public PaginadoPropiedades paginadoPropiedades { get; set; }
 
-        
     }
 }

@@ -37,23 +37,28 @@ namespace DAL
             }
         }
 
-        public DataSet QueryContactosFiltros(SqlConnection conexion, ContactoFiltro cFiltro)
+        public DataSet QueryContactosFiltros(SqlConnection conexion, ContactoFiltro cFiltro,int pageIndex, int pageSize)
         {
             using (SqlDataAdapter adapter = new SqlDataAdapter())
             {
-                adapter.SelectCommand = ConfigSelectCommand(conexion, cFiltro);
+                adapter.SelectCommand = ConfigSelectCommand(conexion, cFiltro,pageIndex,pageSize);
 
                 DataSet ds = new DataSet();
                 adapter.Fill(ds);
+
+                if (DataSetHelper.HasRecords(ds) && cFiltro.paginadoPropiedades != null)
+                {
+                    cFiltro.paginadoPropiedades.RecordsCount = Convert.ToInt32(ds.Tables[0].Rows[0]["total_records"]);
+                }
                 return ds;
             }
         }
 
-        private SqlCommand ConfigSelectCommand(SqlConnection conexion, ContactoFiltro cFiltro)
+        private SqlCommand ConfigSelectCommand(SqlConnection conexion, ContactoFiltro cFiltro,int pageIndex, int pageSize)
         {
             SqlCommand cmd = new SqlCommand
             {
-                CommandText = "Sp_Contacto_GetByFilter",
+                CommandText = "Sp_Contacto_GetByFilterPaginado",
                 CommandType = CommandType.StoredProcedure,
                 Connection = conexion
             };
@@ -66,7 +71,9 @@ namespace DAL
                 new SqlParameter() { ParameterName = "@ContInterno", Value = cFiltro.ContactoInterno, SqlDbType = SqlDbType.VarChar},
                 new SqlParameter() { ParameterName = "@Organizacion", Value = cFiltro.Organizacion, SqlDbType = SqlDbType.VarChar },
                 new SqlParameter() { ParameterName = "@IdArea", Value = cFiltro.IdArea, SqlDbType = SqlDbType.Int },
-                new SqlParameter() { ParameterName = "@Activo", Value = cFiltro.Activo, SqlDbType = SqlDbType.VarChar }
+                new SqlParameter() { ParameterName = "@Activo", Value = cFiltro.Activo, SqlDbType = SqlDbType.VarChar },
+                new SqlParameter() { ParameterName = "@PageIndex", Value = pageIndex, SqlDbType = SqlDbType.Int },
+                new SqlParameter() { ParameterName = "@PageSize", Value = pageSize, SqlDbType = SqlDbType.Int}
             });
             return cmd;
         }
@@ -101,12 +108,66 @@ namespace DAL
             return registrosAfectados;
         }
 
+        public int ActualizarContacto(SqlTransaction transaccion, SqlConnection conexion, Contacto contacto)
+        {
+            SqlCommand cmd = new SqlCommand
+            {
+                Connection = transaccion != null ? transaccion.Connection : conexion,
+                Transaction = transaccion,
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "SP_Actualizar_Contacto"
+            };
+
+            cmd = ConfigurarParametrosActualizar(cmd, contacto);
+            int registrosAfectados = cmd.ExecuteNonQuery();
+            return registrosAfectados;
+        }
+
+        private SqlCommand ConfigurarParametrosActualizar(SqlCommand cmd, Contacto contacto)
+        {
+            cmd.Parameters.AddRange(new SqlParameter[]{
+                 new SqlParameter() { ParameterName = "@idContacto", Value = contacto.id,    SqlDbType = SqlDbType.Int },
+                new SqlParameter() { ParameterName = "@ApellidoNombre", Value = contacto.nombreApellido,    SqlDbType = SqlDbType.VarChar },
+                new SqlParameter() { ParameterName = "@Genero",      Value = contacto.genero,    SqlDbType = SqlDbType.VarChar },
+                new SqlParameter() { ParameterName = "@IdPais",         Value = contacto.IdPais,    SqlDbType = SqlDbType.Int },
+                new SqlParameter() { ParameterName = "@Localidad",      Value = contacto.localidad,    SqlDbType = SqlDbType.VarChar },
+                new SqlParameter() { ParameterName = "@ContInterno",  Value = contacto.contactoInterno,    SqlDbType = SqlDbType.VarChar},
+                new SqlParameter() { ParameterName = "@Organizacion",   Value = contacto.organizacion,    SqlDbType = SqlDbType.VarChar },
+                new SqlParameter() { ParameterName = "@IdArea",         Value = contacto.IdArea,    SqlDbType = SqlDbType.Int},
+                new SqlParameter() { ParameterName = "@Activo",      Value = contacto.activo,    SqlDbType = SqlDbType.VarChar },
+                new SqlParameter() { ParameterName = "@Direccion",      Value = contacto.direccion,    SqlDbType = SqlDbType.VarChar },
+                new SqlParameter() { ParameterName = "@TelFijo",       Value = contacto.telefonoFijo,    SqlDbType = SqlDbType.VarChar },
+                new SqlParameter() { ParameterName = "@TelCel",        Value = contacto.telefonoCelular,    SqlDbType = SqlDbType.VarChar },
+                new SqlParameter() { ParameterName = "@Email",          Value = contacto.email,    SqlDbType = SqlDbType.VarChar },
+                new SqlParameter() { ParameterName = "@Skype",          Value = contacto.cuentaSkype,    SqlDbType = SqlDbType.VarChar }
+            });
+            return cmd;
+        }
+
         private SqlCommand ConfigurarParametrosEliminar(SqlCommand cmd, int idContacto)
         {
             cmd.Parameters.AddRange(new SqlParameter[]{
                 new SqlParameter(){ParameterName = "@IdContacto", Value = idContacto, SqlDbType = SqlDbType.Int}
             });
             return cmd;
+        }
+
+        public int? ActivarPausarContacto(SqlTransaction transaction, SqlConnection connection, int idContacto, string activo)
+        {
+            SqlCommand cmd = new SqlCommand
+            {
+                Connection = transaction != null ? transaction.Connection : connection,
+                Transaction = transaction,
+                CommandType = CommandType.StoredProcedure,
+                CommandText = "SP_Activar_Pausar_Contacto"
+            };
+
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@idContacto", Value = idContacto, SqlDbType = SqlDbType.Int });
+            cmd.Parameters.Add(new SqlParameter() { ParameterName = "@activo", Value = activo, SqlDbType = SqlDbType.VarChar });
+
+            int registrosAfectados = cmd.ExecuteNonQuery();
+
+            return registrosAfectados;
         }
 
         private SqlCommand ConfigurarParametros(SqlCommand cmd, Contacto contacto)

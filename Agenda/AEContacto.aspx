@@ -6,6 +6,19 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
+    <script type = "text/javascript">
+        function Confirm() {
+            var confirm_value = document.createElement("INPUT");
+            confirm_value.type = "hidden";
+            confirm_value.name = "confirm_value";
+            if (confirm("Desea dar de alta el nuevo contacto?")) {
+                confirm_value.value = "Si";
+            } else {
+                confirm_value.value = "No";
+            }
+            document.forms[0].appendChild(confirm_value);
+        }
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -16,6 +29,8 @@
                     </td>
                     <td > 
                         <asp:TextBox ID="TextBoxNombre" runat="server"  Width="250px" Height="30px" Font-Size="Larger" CssClass="Consulta"></asp:TextBox>
+                      <asp:RequiredFieldValidator ValidationGroup="ValidarCampos" ID="RequiredFieldValidatorUserName"   runat="server"   ControlToValidate="TextBoxNombre"
+                                        Display="Dynamic" SetFocusOnError="True" CssClass="alert-text" />     
                     </td>
                     <td> 
                         <asp:Label ID="LabelGenero" runat="server" Text="Genero"  CssClass="TextoConsulta" ></asp:Label>
@@ -41,13 +56,13 @@
                         <asp:Label ID="LabelCI" runat="server" Text="Contacto Interno"  CssClass="TextoConsulta" ></asp:Label>
                     </td>
                     <td>
-                        <asp:DropDownList ID="DropDownCI" runat="server" Width="250px" Height="30px" Font-Size="Larger" CssClass="Consulta"></asp:DropDownList>
+                        <asp:DropDownList ID="DropDownCI" runat="server" Width="250px" Height="30px" Font-Size="Larger" CssClass="Consulta" AutoPostBack="true" OnSelectedIndexChanged="CambioContactoInterno"></asp:DropDownList>
                     </td>
                      <td> 
                         <asp:Label ID="LabelOrganizacion" runat="server" Text="Organizacion" CssClass="TextoConsulta"></asp:Label> 
                      </td>
                      <td > 
-                        <asp:TextBox ID="TextBoxOrganizacion" runat="server"  Width="250px" Height="30px" Font-Size="Larger" CssClass="Consulta"></asp:TextBox>
+                        <asp:TextBox ID="TextBoxOrganizacion" runat="server"  Width="250px" Height="30px" Font-Size="Larger" Enabled="false" CssClass="Consulta"></asp:TextBox>
                      </td>
              </tr>
              <tr> 
@@ -74,7 +89,9 @@
              <tr>
                   <td> 
                         <asp:Label ID="LabelTF" runat="server" Text="Telefono Fijo - Interno" CssClass="TextoConsulta"></asp:Label> 
-                    </td>
+                    <asp:CustomValidator   ValidationGroup="ValidarCampos"  ID="FingDesdeValidator"  OnServerValidate="ValidarTelSkype" runat="server"></asp:CustomValidator>                
+                   
+                  </td>
                     <td > 
                         <asp:TextBox ID="TextBoxTF" runat="server"  Width="250px" Height="30px" Font-Size="Larger" CssClass="Consulta"></asp:TextBox>
                     </td>
@@ -89,6 +106,9 @@
                     </td>
                     <td >
                         <asp:TextBox ID="TextBoxEmail" runat="server" Width="250px" Height="30px" Font-Size="Larger" CssClass="Consulta"></asp:TextBox>
+                        <asp:RequiredFieldValidator ValidationGroup="ValidarCampos" ID="RequiredFieldValidator2"   runat="server"   ControlToValidate="TextBoxEmail"
+                                            Display="Dynamic" SetFocusOnError="True" CssClass="alert-text" />
+                        <asp:CustomValidator ValidationGroup="ValidarCampos"  ID="EmailValidator"  OnServerValidate="EmailValidador" ControlToValidate="TextBoxEmail"  runat="server"></asp:CustomValidator>      
                     </td>
              </tr>
              <tr>
@@ -102,11 +122,11 @@
               <tr> 
                     <td>
                         <asp:Button ID="ButtonGuardar" runat="server" Text="Guardar"
-                            Width="100px" Height="40px" BackColor="Green" Font-Size="Larger" Font-Bold="true" ForeColor="WhiteSmoke" onClick="Guardar" />
+                            Width="100px" Height="40px" BackColor="Green" Font-Size="Larger" Font-Bold="true" ForeColor="WhiteSmoke" onClick="Guardar"  />
                     </td>
                     <td>
                         <asp:Button ID="ButtonSalir" runat="server" Text="Salir"
-                            Width="100px" Height="40px" BackColor="Blue" Font-Size="Larger" Font-Bold="true" ForeColor="WhiteSmoke"  />
+                            Width="100px" Height="40px" BackColor="Blue" Font-Size="Larger" Font-Bold="true" ForeColor="WhiteSmoke" OnClick="VolverAinicio" />
                     </td>
                 </tr>
           </table>

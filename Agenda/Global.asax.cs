@@ -17,11 +17,8 @@ namespace Agenda
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            List<Entidad.Contacto> listaContacto = new List<Entidad.Contacto>();
-            listaContacto.Add(new Entidad.Contacto { id = 1, nombreApellido = "Juan Stampone" });
-            listaContacto.Add(new Entidad.Contacto{id = 2, nombreApellido = "Diego Perez"});
-            listaContacto.Add(new Entidad.Contacto { id = 3, nombreApellido = "Roberto Garcia" });
-            Application["listaContacto"] = listaContacto;
+            
+            Application["FiltroExiste"] = false;
         }
     }
 }

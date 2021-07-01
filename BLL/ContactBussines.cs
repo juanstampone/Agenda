@@ -41,12 +41,20 @@ namespace BLL
             }
         }
 
-        public void update(Contacto contacto)
+        public int update(Contacto contacto)
         {
-            this.listContacto.Remove(contacto);
-            this.listContacto.Add(contacto);
+            using (DataAccessLayer dal = new DataAccessLayer())
+            {
+                SqlConnection conexion = dal.AbrirConexion();
+                SqlTransaction transaccion = conexion.BeginTransaction();
+
+                int resultado = dal.ActualizarContacto(transaccion, conexion, contacto);
+                transaccion.Commit();
+                return resultado;
+            }
+            return 0;
         }
-        
+
         public int delete(int idContacto)
         {
             using (DataAccessLayer dal = new DataAccessLayer())
@@ -63,7 +71,7 @@ namespace BLL
 
         public int insertar(Contacto contacto)
         {
-            using(DataAccessLayer dal = new DataAccessLayer())
+            using (DataAccessLayer dal = new DataAccessLayer())
             {
                 SqlConnection conexion = dal.AbrirConexion();
                 SqlTransaction transaccion = conexion.BeginTransaction();
@@ -75,29 +83,31 @@ namespace BLL
             return 0;
         }
 
-        public List<Contacto> ConsultaFiltroContacto(ContactoFiltro contactoFiltro)
+        public List<Contacto> ConsultaFiltroContacto(ContactoFiltro contactoFiltro, int pageIndex, int pageSize)
         {
-                using (DataAccessLayer dal = new DataAccessLayer())
-                {
-                    SqlConnection conexion = dal.AbrirConexion();
+            using (DataAccessLayer dal = new DataAccessLayer())
+            {
+                SqlConnection conexion = dal.AbrirConexion();
 
-                    DataSet ds = dal.QueryContactosFiltros(conexion, contactoFiltro);
-                    return MapDataSetToEmpleados(ds);
-                }
-            
+                DataSet ds = dal.QueryContactosFiltros(conexion, contactoFiltro, pageIndex, pageSize);
+                return MapDataSetToEmpleados(ds);
+            }
+
         }
 
         private List<Contacto> MapDataSetToEmpleados(DataSet ds)
         {
             List<Contacto> listaContacto = new List<Contacto>();
-            if (DataSetHelper.HasRecords(ds)){
+            if (DataSetHelper.HasRecords(ds))
+            {
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
                     listaContacto.Add(MapDataRowToContacto(row));
                 }
                 return listaContacto;
             }
-            else {
+            else
+            {
                 return null;
             }
         }
@@ -122,6 +132,33 @@ namespace BLL
                 email = Convert.ToString(row["Email"]),
                 cuentaSkype = Convert.ToString(row["CuentaSkype"])
             };
+        }
+        public int? ActivarPausarContacto(int id_contacto, string activo)
+        {
+            int? regAfec;
+            using (DataAccessLayer dal = new DataAccessLayer())
+            {
+                var connection = dal.AbrirConexion();
+                SqlTransaction transaction = connection.BeginTransaction();
+                try
+                {
+
+                    regAfec = dal.ActivarPausarContacto(transaction, connection, id_contacto, activo);
+                    transaction.Commit();
+
+                    return regAfec;
+
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    return null;
+                }
+                finally
+                {
+                    transaction.Dispose();
+                }
+            }
         }
     }
 }

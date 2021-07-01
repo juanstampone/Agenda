@@ -51,6 +51,15 @@ namespace Agenda
         protected global::System.Web.UI.WebControls.TextBox TextBoxNombre;
 
         /// <summary>
+        /// Control RequiredFieldValidatorUserName.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidatorUserName;
+
+        /// <summary>
         /// Control LabelGenero.
         /// </summary>
         /// <remarks>
@@ -204,6 +213,15 @@ namespace Agenda
         protected global::System.Web.UI.WebControls.Label LabelTF;
 
         /// <summary>
+        /// Control FingDesdeValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator FingDesdeValidator;
+
+        /// <summary>
         /// Control TextBoxTF.
         /// </summary>
         /// <remarks>
@@ -247,6 +265,24 @@ namespace Agenda
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextBoxEmail;
+
+        /// <summary>
+        /// Control RequiredFieldValidator2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+
+        /// <summary>
+        /// Control EmailValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator EmailValidator;
 
         /// <summary>
         /// Control LabelCS.
