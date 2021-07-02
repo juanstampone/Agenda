@@ -90,12 +90,12 @@ namespace BLL
                 SqlConnection conexion = dal.AbrirConexion();
 
                 DataSet ds = dal.QueryContactosFiltros(conexion, contactoFiltro, pageIndex, pageSize);
-                return MapDataSetToEmpleados(ds);
+                return MapDataSetToContacto(ds);
             }
 
         }
 
-        private List<Contacto> MapDataSetToEmpleados(DataSet ds)
+        private List<Contacto> MapDataSetToContacto(DataSet ds)
         {
             List<Contacto> listaContacto = new List<Contacto>();
             if (DataSetHelper.HasRecords(ds))

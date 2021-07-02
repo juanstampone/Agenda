@@ -14,7 +14,7 @@ namespace Agenda
 {
     public partial class _Default : Page
     {
-        int PageSize = 2;
+        int PageSize = 5;
         
         protected void Page_Load(object sender, EventArgs e)
         {

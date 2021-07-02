@@ -27,7 +27,8 @@
 </head>
 <body>
     <form id="form1" runat="server" style="background-color: #f1f1f1" >
-        <div id="DivMiPagina" runat="server">        
+        <div id="DivMiPagina" runat="server">     
+            <div class="container">
             <table width="100%" id ="TablaDeMiPagina" runat ="server" >
                 <tr> 
                     <td> 
@@ -92,22 +93,25 @@
                     </td>
                     
                 </tr>
-                <tr> 
-                    <td>
-                        <asp:Button ID="ButtonLimpiar" runat="server" Text="Limpiar Campos" OnClick="LimpiarCampos"
-                            Width="100px" Height="40px" BackColor="Green" Font-Size="Larger" Font-Bold="true" ForeColor="WhiteSmoke" />
-                    </td>
-                    <td>
-                        <asp:Button ID="ButtonBuscar" runat="server" Text="Buscar"
-                            Width="100px" Height="40px" BackColor="Green" Font-Size="Larger" Font-Bold="true" ForeColor="WhiteSmoke" OnClick="Consultar" />
-                    </td>
-                    <td>
-                        <asp:Button ID="ButtonNuevoContacto" runat="server" Text="Nuevo Contacto"
-                            Width="100px" Height="40px" BackColor="Blue" Font-Size="Larger" Font-Bold="true" ForeColor="WhiteSmoke" OnClick="AltaContacto" />
-                    </td>
-                </tr>
+                </table>
+                <table>
+                    <tr> 
+                        <td style="width: 1000px;">
+                            <asp:ImageButton ToolTip="Limpiar Filtros" OnClick="LimpiarCampos" runat="server" ID="ButtonLimpiar"  ImageUrl="Images/clearFilter.png"/>  
+                   
+                        </td>
+                        <td>
+                            <asp:Button ID="ButtonBuscar" runat="server" Text="Buscar"
+                                Width="100px" Height="40px" BackColor="Green" Font-Size="Larger" Font-Bold="true" ForeColor="WhiteSmoke" OnClick="Consultar" />
+                        </td>
+                        <td>
+                            <asp:Button ID="ButtonNuevoContacto" runat="server" Text="Nuevo Contacto"
+                                Width="216px" Height="40px" BackColor="Blue" Font-Size="Larger" Font-Bold="true" ForeColor="WhiteSmoke" OnClick="AltaContacto" />
+                        </td>
+                    </tr>
+                </table>
                 
-            </table>
+            
             <asp:GridView ID="GridViewConsulta" runat="server" Text="Texto" AutoGenerateColumns="false" RowStyle-HorizontalAlign="Center"
                          HeaderStyle-CssClass ="TextoConsulta" Width="100%" GridLines="Horizontal" >
                 <Columns> 
@@ -137,13 +141,14 @@
                 </Columns>
            </asp:GridView>
             <br />
-             <asp:Repeater ID="rptPager" runat="server">  
-                            <ItemTemplate>  
-                                <asp:LinkButton ID="lnkPage" runat="server" Text='<%#Eval("Text") %>' CommandArgument='<%# Eval("Value") %>'  
-                                    Enabled='<%# Eval("Enabled") %>' OnClick="lnkbtn_PageIndexChanged"></asp:LinkButton>  
-                            </ItemTemplate>  
-                        </asp:Repeater> 
+             <asp:Repeater ID="rptPager" runat="server" >  
+                <ItemTemplate>  
+                    <asp:LinkButton ID="lnkPage" runat="server" Text='<%#Eval("Text") %>' CommandArgument='<%# Eval("Value") %>'  
+                        Enabled='<%# Eval("Enabled") %>' OnClick="lnkbtn_PageIndexChanged"></asp:LinkButton>  
+                </ItemTemplate>  
+            </asp:Repeater> 
         </div>
+            </div>
     </form>
 </body>
 </html>

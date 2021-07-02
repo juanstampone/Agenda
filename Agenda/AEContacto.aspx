@@ -119,7 +119,12 @@
                         <asp:TextBox ID="TextBoxCS" runat="server"  Width="250px" Height="30px" Font-Size="Larger" CssClass="Consulta"></asp:TextBox>
                     </td>
              </tr>
-              <tr> 
+             </table>
+        <table>
+             <tr> 
+                <td style ="width: 1100px">
+
+                </td>
                     <td>
                         <asp:Button ID="ButtonGuardar" runat="server" Text="Guardar"
                             Width="100px" Height="40px" BackColor="Green" Font-Size="Larger" Font-Bold="true" ForeColor="WhiteSmoke" onClick="Guardar"  />
