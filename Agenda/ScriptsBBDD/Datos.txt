@@ -1,0 +1,23 @@
+insert into Pais(NombrePais) values('Argentina');
+insert into Pais(NombrePais) values('Brasil');
+insert into Pais(NombrePais) values('Ecuador');
+insert into Pais(NombrePais) values('Chile');
+insert into Pais(NombrePais) values('Venezuela');
+insert into Pais(NombrePais) values('Colombia');
+
+
+insert into Area (NombreArea) values('Marketing');
+insert into Area (NombreArea) values('Finanzas');
+insert into Area (NombreArea) values('RRHH');
+insert into Area (NombreArea) values('Operaciones');
+
+
+insert into Contacto(ApellidoNombre,Genero,IdPais, Localidad, ContactoInterno, Organizacion, IdArea, Activo, Direccion, TelefonoFijo, TelefonoCelular, Email, FechaIngreso)
+				values('Juan Stampone', 'M', 1, 'Bolivar', 'SI', 'Unicen', 4, 'SI', 'GUEMES', '121212', '12121', 'juanstampone@gmail.com', '10/06/2021');
+
+insert into Contacto(ApellidoNombre,Genero,IdPais, Localidad, ContactoInterno, Organizacion, IdArea, Activo, Direccion, TelefonoFijo, TelefonoCelular, Email, FechaIngreso)
+				values('Julio Stampone', 'M', 1, 'Bolivar', 'NO', 'Unicen', 4, 'SI', 'SAN MARTIN', '121212', '12121', 'juliostampone@gmail.com', '08/06/2021');
+
+
+insert into Contacto(ApellidoNombre,Genero,IdPais, Localidad, ContactoInterno, Organizacion, IdArea, Activo, Direccion, TelefonoFijo, TelefonoCelular, Email, FechaIngreso)
+				values('Silvia Perez', 'F', 2, 'San Pablo', 'NO', 'Unicen', 4, 'NO', 'PINTO', '121212', '12121', 'je@gmail.com', '02/06/2021');

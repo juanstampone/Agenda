@@ -1,0 +1,2 @@
+ALTER TABLE Contacto
+ADD CONSTRAINT PK_Contacto PRIMARY KEY (IdContacto);

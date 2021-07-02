@@ -1,0 +1,4 @@
+
+ALTER TABLE Contacto
+ADD CONSTRAINT FK_AreaContacto
+FOREIGN KEY (IdArea) REFERENCES Area(IdArea);

@@ -1,0 +1,17 @@
+CREATE TABLE [dbo].[Contacto](
+	[idContacto] [int] IDENTITY(1,1) NOT NULL,
+	[Genero] [varchar](20) NOT NULL,
+	[IdPais] [int] NOT NULL,
+	[Localidad] [varchar](50) NULL,
+	[ContactoInterno] [varchar](2) NOT NULL,
+	[Organizacion] [varchar](100) NULL,
+	[IdArea] [int] NULL,
+	[Activo] [varchar](2) NOT NULL,
+	[Direccion] [varchar](100) NULL,
+	[TelefonoFijo] [varchar](20) NOT NULL,
+	[TelefonoCelular] [varchar](20) NOT NULL,
+	[Email] [varchar](100) NOT NULL,
+	[CuentaSkype] [varchar](100) NULL,
+	[ApellidoNombre] [varchar](100) NOT NULL,
+	[FechaIngreso] [datetime] NULL,
+	[FechaBaja] [datetime] NULL)
